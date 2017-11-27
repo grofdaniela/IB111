@@ -21,14 +21,3 @@ class Team:
             if skill in employee.skills:
                 return True
         return False
-
-    def not_having_skills(self, skills):
-        missing_skills = []
-        for skill in skills:
-            having = False
-            for employee in self.members:
-                if skill in employee.skills:
-                    having = True
-            if not having:
-                missing_skills.append(skill)
-        return missing_skills
