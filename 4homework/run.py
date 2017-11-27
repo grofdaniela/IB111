@@ -1,4 +1,8 @@
 from employee import Employee
 from team import Team
-from firm import Firm
+from company import Company
+
+if __name__ == '__main__':
+    moneyhell = Company('import.txt')
+    moneyhell.hierarchy('Elon')
 
