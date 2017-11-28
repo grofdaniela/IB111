@@ -79,7 +79,11 @@ class Company:
     def number_of_subordinates(self, name, n=0):
         for employee in self.employees:
             if employee.supervisor == name:
-                # n += 1
                 n += self.number_of_subordinates(employee.name, n+1)
-        return 14
+        return n
+
+    def missing_skills(self, skills):
+        for team in self.teams:
+            if len(team.not_having_skills(skills)) > 0:
+                print(team.project + ' team is missing ' + ' and '.join(team.not_having_skills(skills)) + ' skill.')
 
