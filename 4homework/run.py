@@ -5,4 +5,4 @@ from company import Company
 if __name__ == '__main__':
     moneyhell = Company('import.txt')
     moneyhell.hierarchy('Elon')
-
+    print(moneyhell.number_of_subordinates('Elon'))

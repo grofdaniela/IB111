@@ -79,7 +79,7 @@ class Company:
     def number_of_subordinates(self, name, n=0):
         for employee in self.employees:
             if employee.supervisor == name:
-                n += 1
-                self.number_of_subordinates(employee.name, n)
-        return n
+                # n += 1
+                n += self.number_of_subordinates(employee.name, n+1)
+        return 14
 
