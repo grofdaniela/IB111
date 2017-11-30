@@ -11,7 +11,7 @@ class Team:
 
     def average_age(self):
         age = [employee.age for employee in self.members]
-        return sum(age)/len(self.members)
+        return round(sum(age)/len(self.members))
 
     def sort_by_age(self):
         self.members = sorted(self.members, key=lambda employee: employee.age)

@@ -1,10 +1,13 @@
 from employee import Employee
 from team import Team
+from colorama import Fore
+from pyfiglet import Figlet
 
 
 class Company:
-    def __init__(self, import_file):
+    def __init__(self, import_file, company_name):
         self.import_file = import_file
+        self.name = company_name
         self.employees = []
         self.teams = []
         self.add_employees_to_organization(self.make_company()[0])
@@ -51,6 +54,12 @@ class Company:
         employees = [employee for employee in self.employees if employee.name == name1 or employee.name == name2]
         return employees[0].supervisor == employees[1].supervisor
 
+
+    def average_age(self, project):
+        for team in self.teams:
+            if team.project == project:
+                return team.average_age()
+
     def print_team_sorted_by_age(self):
         for team in self.teams:
             team.sort_by_age()
@@ -59,8 +68,8 @@ class Company:
                 print(employee)
 
     def get_the_oldest(self):
-        oldest = [(employee.name + ' ' + employee.birth_year) for employee in self.employees if employee.age == max([employee.age for employee in self.employees])]
-        return ' '.join(oldest)
+        return [(employee.name + ' (born in ' + employee.birth_year + ')') for employee in self.employees
+                  if employee.age == max([employee.age for employee in self.employees])]
 
     def find_birth_date(self, name):
         for employee in self.employees:
@@ -68,22 +77,37 @@ class Company:
                 return employee.birth_year
 
     def hierarchy(self, name, n=1):
+        colors = {
+            0: 'MAGENTA',
+            1: 'YELLOW',
+            2: 'BLUE',
+            3: 'GREEN'
+        }
         if n == 1:
+<<<<<<< HEAD
             print(name + ' <' + str(self.find_birth_date(name)) + '>')
         # self.employees = sorted(self.employees, key=lambda employee: employee.name)
+=======
+            print(Fore.RED + name.upper() + ' <' + str(self.find_birth_date(name)) + '>' + Fore.RESET)
+        self.employees = sorted(self.employees, key=lambda employee: employee.name)
+>>>>>>> 8101d782fd5b2cff14cbf76fc611b7693be49900
         for employee in self.employees:
             if employee.supervisor == name:
-                print(n*'\t' + employee.name + ' <' + str(employee.birth_year) + '>')
+                print(eval('Fore.'+colors[n % 4]) + n*'\t' + employee.name + ' <' + str(employee.birth_year) + '>' + Fore.RESET)
                 self.hierarchy(employee.name, n+1)
 
     def number_of_subordinates(self, name, n=0):
+        self.employees = sorted(self.employees, key=lambda employee: employee.name)
         for employee in self.employees:
             if employee.supervisor == name:
-                n += self.number_of_subordinates(employee.name, n+1)
+                n = self.number_of_subordinates(employee.name, n+1)
         return n
 
     def missing_skills(self, skills):
         for team in self.teams:
             if len(team.not_having_skills(skills)) > 0:
-                print(team.project + ' team is missing ' + ' and '.join(team.not_having_skills(skills)) + ' skill.')
+                print("{} team is missing {} skill.".format(team.project, ' and '.join(team.not_having_skills(skills))))
 
+    def make_logo(self):
+        f = Figlet(font="slant")
+        print(Fore.RED + f.renderText(self.name) + Fore.RESET)
