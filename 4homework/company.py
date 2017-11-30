@@ -70,7 +70,7 @@ class Company:
     def hierarchy(self, name, n=1):
         if n == 1:
             print(name + ' <' + str(self.find_birth_date(name)) + '>')
-        self.employees = sorted(self.employees, key=lambda employee: employee.name)
+        # self.employees = sorted(self.employees, key=lambda employee: employee.name)
         for employee in self.employees:
             if employee.supervisor == name:
                 print(n*'\t' + employee.name + ' <' + str(employee.birth_year) + '>')
