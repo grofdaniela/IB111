@@ -54,6 +54,7 @@ class Company:
         employees = [employee for employee in self.employees if employee.name == name1 or employee.name == name2]
         return employees[0].supervisor == employees[1].supervisor
 
+
     def average_age(self, project):
         for team in self.teams:
             if team.project == project:
