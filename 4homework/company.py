@@ -26,7 +26,7 @@ class Company:
                     group = list_of_files.pop()
                     continue
                 if line != '\n':
-                    group.append(line)
+                    group.append(line.lower())
         return members, structure, teams
 
     def add_employees_to_organization(self, file):
@@ -68,8 +68,8 @@ class Company:
                 print(employee)
 
     def get_the_oldest(self):
-        return [(employee.name + ' (born in ' + employee.birth_year + ')') for employee in self.employees
-                  if employee.age == max([employee.age for employee in self.employees])]
+        return [(employee.name + ' (born in ' + str(employee.birth_year) + ')') for employee in self.employees
+                if employee.age == max([employee.age for employee in self.employees])]
 
     def find_birth_date(self, name):
         for employee in self.employees:
@@ -83,17 +83,13 @@ class Company:
             2: 'BLUE',
             3: 'GREEN'
         }
+        self.employees = sorted(self.employees, key=lambda employee: employee.name)
         if n == 1:
-<<<<<<< HEAD
-            print(name + ' <' + str(self.find_birth_date(name)) + '>')
-        # self.employees = sorted(self.employees, key=lambda employee: employee.name)
-=======
             print(Fore.RED + name.upper() + ' <' + str(self.find_birth_date(name)) + '>' + Fore.RESET)
         self.employees = sorted(self.employees, key=lambda employee: employee.name)
->>>>>>> 8101d782fd5b2cff14cbf76fc611b7693be49900
         for employee in self.employees:
             if employee.supervisor == name:
-                print(eval('Fore.'+colors[n % 4]) + n*'\t' + employee.name + ' <' + str(employee.birth_year) + '>' + Fore.RESET)
+                print(eval('Fore.'+colors[n % 4]) + n*'\t' + employee.name[0].upper() + employee.name[1:] + ' <' + str(employee.birth_year) + '>' + Fore.RESET)
                 self.hierarchy(employee.name, n+1)
 
     def number_of_subordinates(self, name, n=0):
@@ -111,3 +107,9 @@ class Company:
     def make_logo(self):
         f = Figlet(font="slant")
         print(Fore.RED + f.renderText(self.name) + Fore.RESET)
+
+    def employees_names(self):
+        return [employee.name for employee in self.employees]
+
+    def teams_projects(self):
+        return [team.project for team in self.teams]
